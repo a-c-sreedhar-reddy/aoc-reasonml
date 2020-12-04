@@ -9,6 +9,7 @@ CLI.(
   |> action(({log, args}) => {
        switch (args.string("day")) {
        | "day-one" => Console.log(DayOne.run())
+       | "day-two" => Console.log(DayTwo.run())
        | t => Console.log("Not there yet")
        }
      })
