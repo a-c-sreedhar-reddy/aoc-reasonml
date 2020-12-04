@@ -8,8 +8,8 @@ CLI.(
   |> argument("day", "Day of the AoC month", String)
   |> action(({log, args}) => {
        switch (args.string("day")) {
-       | "day-one" => DayOne.run()
-       | _ => Console.log("Not there yet")
+       | "day-one" => Console.log(DayOne.run())
+       | t => Console.log("Not there yet")
        }
      })
   |> parseAndRun(Sys.argv)
