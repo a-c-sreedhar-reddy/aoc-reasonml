@@ -10,6 +10,7 @@ CLI.(
        switch (args.string("day")) {
        | "day-one" => Console.log(DayOne.run())
        | "day-two" => Console.log(DayTwo.run())
+       | "day-three" => Console.log(DayThree.run())
        | t => Console.log("Not there yet")
        }
      })
