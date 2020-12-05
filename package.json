@@ -21,7 +21,8 @@
       "imports": [
         "Containers = require('@opam/containers')",
         "Fp = require('@reason-native/fp')",
-        "Fs = require('@reason-native/fs/lib')"
+        "Fs = require('@reason-native/fs/lib')",
+        "Angstrom = require('@opam/angstrom')"
       ]
     },
     "src/bin": {
@@ -60,14 +61,14 @@
   "dependencies": {
     "@esy-ocaml/reason": "*",
     "@opam/angstrom": "0.15.0",
+    "@opam/containers": "*",
     "@opam/dune": "*",
     "@pesy/esy-pesy": "0.1.0-alpha.13",
+    "@reason-native/cli": "*",
     "@reason-native/console": "^0.1.0",
     "@reason-native/fp": "*",
     "@reason-native/fs": "*",
-    "@reason-native/cli": "*",
     "@reason-native/rely": "^3.2.1",
-    "@opam/containers": "*",
     "ocaml": "~4.9.0"
   },
   "devDependencies": {

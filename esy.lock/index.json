@@ -56,13 +56,13 @@
         "@reason-native/cli@github:ManasJayanth/reason-native:cli.json#1240e2757a9685473280b9543f6ae2d8bd53c552@d41d8cd9",
         "@pesy/esy-pesy@0.1.0-alpha.13@d41d8cd9",
         "@opam/dune@opam:2.7.1@f5f493bc",
-        "@opam/containers@opam:3.0.1@6fea78e4",
+        "@opam/containers@opam:3.1@efabb4ca",
         "@opam/angstrom@opam:0.15.0@48ede9cb",
         "@esy-ocaml/reason@3.6.2@d41d8cd9"
       ],
       "devDependencies": [
         "refmterr@3.3.2@d41d8cd9",
-        "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#f0fbe4474c40a36282ef821d7bd7b0a29ccf33b6@d41d8cd9",
+        "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#23546b370cfb534ae3b095a29319f7f09a41435e@d41d8cd9",
         "@opam/merlin@opam:3.4.2@9a4d1fd4"
       ]
     },
@@ -718,16 +718,16 @@
         "ocaml@4.9.1000@d41d8cd9", "@opam/dune@opam:2.7.1@f5f493bc"
       ]
     },
-    "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#f0fbe4474c40a36282ef821d7bd7b0a29ccf33b6@d41d8cd9": {
+    "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#23546b370cfb534ae3b095a29319f7f09a41435e@d41d8cd9": {
       "id":
-        "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#f0fbe4474c40a36282ef821d7bd7b0a29ccf33b6@d41d8cd9",
+        "@opam/ocaml-lsp-server@github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#23546b370cfb534ae3b095a29319f7f09a41435e@d41d8cd9",
       "name": "@opam/ocaml-lsp-server",
       "version":
-        "github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#f0fbe4474c40a36282ef821d7bd7b0a29ccf33b6",
+        "github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#23546b370cfb534ae3b095a29319f7f09a41435e",
       "source": {
         "type": "install",
         "source": [
-          "github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#f0fbe4474c40a36282ef821d7bd7b0a29ccf33b6"
+          "github:ocaml/ocaml-lsp:ocaml-lsp-server.opam#23546b370cfb534ae3b095a29319f7f09a41435e"
         ]
       },
       "overrides": [],
@@ -1156,20 +1156,20 @@
         "@opam/base-unix@opam:base@87d0b2eb"
       ]
     },
-    "@opam/containers@opam:3.0.1@6fea78e4": {
-      "id": "@opam/containers@opam:3.0.1@6fea78e4",
+    "@opam/containers@opam:3.1@efabb4ca": {
+      "id": "@opam/containers@opam:3.1@efabb4ca",
       "name": "@opam/containers",
-      "version": "opam:3.0.1",
+      "version": "opam:3.1",
       "source": {
         "type": "install",
         "source": [
-          "archive:https://opam.ocaml.org/cache/md5/43/438a7bbcb789e116eead04c8a59641f0#md5:438a7bbcb789e116eead04c8a59641f0",
-          "archive:https://github.com/c-cube/ocaml-containers/archive/v3.0.1.tar.gz#md5:438a7bbcb789e116eead04c8a59641f0"
+          "archive:https://opam.ocaml.org/cache/md5/18/18f35ec3794803f5a4f95254f313c764#md5:18f35ec3794803f5a4f95254f313c764",
+          "archive:https://github.com/c-cube/ocaml-containers/archive/v3.1.tar.gz#md5:18f35ec3794803f5a4f95254f313c764"
         ],
         "opam": {
           "name": "containers",
-          "version": "3.0.1",
-          "path": "esy.lock/opam/containers.3.0.1"
+          "version": "3.1",
+          "path": "esy.lock/opam/containers.3.1"
         }
       },
       "overrides": [],
