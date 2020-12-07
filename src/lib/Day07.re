@@ -70,6 +70,16 @@ let rec canContain = bag => {
         bag.rules,
       );
 };
+let rec getBagsIntheBag = bag => {
+  let rules = bag.rules;
+  List.map(
+    (rule: rule) => rule.count * getBagsIntheBag(getBagOfColor(rule.color)),
+    rules,
+  )
+  |> List.fold_right((acc, cur) => acc + cur, _, 1);
+};
 let run = () => {
-  parsed |> List.filter(bag => canContain(bag)) |> List.length;
+  let part1 = parsed |> List.filter(bag => canContain(bag)) |> List.length;
+  let part2 = getBagsIntheBag(getBagOfColor("shiny gold")) - 1;
+  "Part1:" ++ string_of_int(part1) ++ " Part2:" ++ string_of_int(part2);
 };
