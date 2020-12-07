@@ -1,5 +1,5 @@
 open Angstrom;
-let sol =
+let ids =
   Util.Fs.readLines("/home/a-c-sreedhar-reddy/aoc/src/lib/Day05.txt")
   |> List.map(str => {
        parse_string(
@@ -49,7 +49,20 @@ let sol =
        | Ok(res) => res
        | Error(er) => failwith(er)
        }
-     )
-  |> List.fold_right((curr, acc) => curr > acc ? curr : acc, _, 0);
+     );
+let sol =
+  ids |> List.fold_right((curr, acc) => curr > acc ? curr : acc, _, 0);
+let rec getMySeat = (ids, max, mainList) => {
+  switch (ids) {
+  | [cur, ...rest] =>
+    cur == max
+      ? getMySeat(rest, max, mainList)
+      : mainList |> List.exists(c => c == cur + 1)
+          ? getMySeat(rest, max, mainList) : cur + 1
+  | [] => failwith("empty seat ids")
+  };
+};
 
-let run = () => sol;
+let sol2 = getMySeat(ids, sol, ids);
+let run = () =>
+  "Part1:" ++ string_of_int(sol) ++ " Part2:" ++ string_of_int(sol2);
