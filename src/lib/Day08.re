@@ -1,10 +1,13 @@
 type rule =
   | Acc(int)
   | Jmp(int)
-  | Nop;
+  | Nop(int);
+type bootResult =
+  | Ended(int)
+  | Infinite(int);
 type executedRules = list(int);
 
-let rec executeRule = (~index, ~rules, ~executedRules, ~accumulator) => {
+let executeRule = (~index, ~rules, ~executedRules, ~accumulator) => {
   let accumulator =
     accumulator
     + (
@@ -19,10 +22,56 @@ let rec executeRule = (~index, ~rules, ~executedRules, ~accumulator) => {
     | Jmp(jmp) => index + jmp
     | _ => index + 1
     };
-  executedRules |> List.exists(cur => cur == nextIndex)
-    ? accumulator
-    : executeRule(~index=nextIndex, ~rules, ~executedRules, ~accumulator);
+  (nextIndex, rules, executedRules, accumulator);
 };
+
+let rec play = (~index, ~rules, ~executedRules, ~accumulator) => {
+  index == Array.length(rules)
+    ? Ended(accumulator)
+    : executedRules |> List.exists(cur => cur == index)
+        ? Infinite(accumulator)
+        : {
+          let (nextIndex, rules, executedRules, accumulator) =
+            executeRule(~index, ~rules, ~executedRules, ~accumulator);
+          play(~index=nextIndex, ~rules, ~executedRules, ~accumulator);
+        };
+};
+
+let rec playByChanging = (~index, ~rules, ~executedRules, ~accumulator) => {
+  index == Array.length(rules)
+    ? Ended(accumulator)
+    : {
+      (
+        switch (rules[index]) {
+        | Nop(nop) => Jmp(nop)
+        | Jmp(jmp) => Nop(jmp)
+        | a => a
+        }
+      )
+      |> Array.set(rules, index);
+      switch (play(~index, ~rules, ~executedRules, ~accumulator)) {
+      | Ended(acc) => Ended(acc)
+      | Infinite(_) =>
+        (
+          switch (rules[index]) {
+          | Nop(nop) => Jmp(nop)
+          | Jmp(jmp) => Nop(jmp)
+          | a => a
+          }
+        )
+        |> Array.set(rules, index);
+        let (nextIndex, rules, executedRules, accumulator) =
+          executeRule(~index, ~rules, ~executedRules, ~accumulator);
+        playByChanging(
+          ~index=nextIndex,
+          ~rules,
+          ~executedRules,
+          ~accumulator,
+        );
+      };
+    };
+};
+
 open Angstrom;
 let acc =
   string("acc ")
@@ -56,7 +105,7 @@ let nop =
        | _ => false
        }
      )
-  *> return(Nop);
+  >>| (nop => Nop(int_of_string(nop)));
 let run = () => {
   let rules =
     Util.Fs.readLines("/home/a-c-sreedhar-reddy/aoc/src/lib/Day08.txt")
@@ -72,5 +121,17 @@ let run = () => {
          }
        })
     |> Array.of_list;
-  executeRule(~index=0, ~rules, ~executedRules=[], ~accumulator=0);
+  let part1 =
+    switch (play(~index=0, ~rules, ~executedRules=[], ~accumulator=0)) {
+    | Ended(acc) => acc
+    | Infinite(acc) => acc
+    };
+  let part2 =
+    switch (
+      playByChanging(~index=0, ~rules, ~executedRules=[], ~accumulator=0)
+    ) {
+    | Ended(acc) => acc
+    | Infinite(acc) => failwith("infinite loop")
+    };
+  "Part1:" ++ string_of_int(part1) ++ " part2: " ++ string_of_int(part2);
 };
