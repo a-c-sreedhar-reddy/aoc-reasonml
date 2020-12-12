@@ -19,6 +19,7 @@ CLI.(
        | "day-nine" => Console.log(Day09.run())
        | "day-ten" => Console.log(Day10.run())
        | "day-11" => Console.log(Day11.run())
+       | "day-12" => Console.log(Day12.run())
 
        | t => Console.log("Not there yet")
        }
