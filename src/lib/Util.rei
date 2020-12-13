@@ -13,3 +13,4 @@ let logicalXOR: (bool, bool) => bool;
 
 /* Logical XOR */
 let (<<>>): (bool, bool) => bool;
+let mod_inv: (int, int) => int;
