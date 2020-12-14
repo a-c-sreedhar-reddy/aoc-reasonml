@@ -51,6 +51,75 @@ let parseInstruction =
       }
     ),
   );
+type memory = {
+  address: int,
+  value,
+};
+module Address = Map.Make(Int);
+
+type part2acc('a) = {
+  baseMask: int,
+  xorMask: list(int),
+  result: Address.t('a),
+};
+let part2 = () => {
+  let instructions =
+    Util.Fs.readLines("/home/a-c-sreedhar-reddy/aoc/src/lib/Day14.txt")
+    |> List.map(line => {
+         parse_string(~consume=All, parseMask <|> parseInstruction, line)
+       })
+    |> List.map(ins =>
+         switch (ins) {
+         | Ok(ins) => ins
+         | Error(er) => failwith(er)
+         }
+       );
+  let result = Address.empty;
+  instructions
+  |> List.fold_left(
+       (acc, inst) => {
+         switch (inst) {
+         | Mask(chars) =>
+           let baseMask =
+             chars
+             |> List.fold_left(
+                  (acc, char) => char == '1' ? acc ++ "1" : acc ++ "0",
+                  "0b",
+                )
+             |> int_of_string;
+           let xorMask =
+             chars
+             |> List.fold_left(
+                  (acc, char) => {
+                    char == 'X'
+                      ? List.map(ad => ad ++ "0", acc)
+                        @ List.map(ad => ad ++ "1", acc)
+                      : List.map(ad => ad ++ "0", acc)
+                  },
+                  ["0b"],
+                )
+             |> List.map(int_of_string);
+           {...acc, baseMask, xorMask};
+         | Instruction((address, value)) =>
+           let maskedAddress = address lor acc.baseMask;
+           let possibleAddress =
+             acc.xorMask |> List.map(xormask => xormask lxor maskedAddress);
+           let result =
+             possibleAddress
+             |> List.fold_left(
+                  (result, address) => {
+                    result |> Address.add(address, value)
+                  },
+                  acc.result,
+                );
+           {...acc, result};
+         }
+       },
+       {baseMask: 0, xorMask: [], result},
+     )
+  |> (acc => acc.result)
+  |> Address.fold((key, data, acc) => acc + data, _, 0);
+};
 let run = () => {
   let instructions =
     Util.Fs.readLines("/home/a-c-sreedhar-reddy/aoc/src/lib/Day14.txt")
@@ -95,7 +164,7 @@ let run = () => {
                  ...acc,
                  instructions:
                    acc.instructions
-                   |> List.filter(instruction => {
+                   |> List.filter((instruction: instruction) => {
                         instruction.address != address
                       })
                    |> (
@@ -111,21 +180,24 @@ let run = () => {
          {instructions: [], mask: None},
        )
     |> (({instructions}) => instructions);
-  instructions
-  |> List.fold_left(
-       (sum, {address, mask, value}) => {
-         sum
-         + List.fold_left(
-             (res, op) => {
-               switch (op) {
-               | And(op) => res land op
-               | Or(op) => res lor op
-               }
-             },
-             value,
-             mask,
-           )
-       },
-       0,
-     );
+  let part1 =
+    instructions
+    |> List.fold_left(
+         (sum, {address, mask, value}) => {
+           sum
+           + List.fold_left(
+               (res, op) => {
+                 switch (op) {
+                 | And(op) => res land op
+                 | Or(op) => res lor op
+                 }
+               },
+               value,
+               mask,
+             )
+         },
+         0,
+       );
+  let part2 = part2();
+  "Part1: " ++ string_of_int(part1) ++ " Part2: " ++ string_of_int(part2);
 };
