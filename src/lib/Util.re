@@ -27,3 +27,9 @@ let mod_inv = (a, m) => {
   | _ => failwith("mod_inv")
   };
 };
+
+let isDigit = a =>
+  switch (a) {
+  | '0' .. '9' => true
+  | _ => false
+  };
