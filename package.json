@@ -23,6 +23,17 @@
         "Fp = require('@reason-native/fp')",
         "Fs = require('@reason-native/fs/lib')",
         "Angstrom = require('@opam/angstrom')"
+      ],
+      "foreignStubs": [
+        {
+          "language": "c",
+          "names": [
+            "Day15"
+          ],
+          "flags": [
+            "-O3"
+          ]
+        }
       ]
     },
     "src/bin": {

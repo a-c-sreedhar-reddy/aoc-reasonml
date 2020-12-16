@@ -3,6 +3,8 @@ type num = {
   second: option(int),
 };
 open Angstrom;
+external sum: unit => int = "sum";
+
 let isDigit = a =>
   switch (a) {
   | '0' .. '9' => true
@@ -87,6 +89,12 @@ let run = () => {
   let play =
     play(~numbersMap, ~lastNumber, ~currentTime=List.length(numbers) + 1);
   let part1 = play(~till=2020);
+  let time = Sys.time();
   let part2 = play(~till=30000000);
-  "part1: " ++ string_of_int(part1) ++ " part2: " ++ string_of_int(part2);
+  "part1: "
+  ++ string_of_int(part1)
+  ++ " part2: "
+  ++ string_of_int(part2)
+  ++ " time"
+  ++ string_of_float(Sys.time() -. time);
 };
