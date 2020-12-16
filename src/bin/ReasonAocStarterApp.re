@@ -8,7 +8,7 @@ CLI.(
   |> argument("day", "Day of the AoC month", String)
   |> action(({log, args}) => {
        switch (args.string("day")) {
-       | "day-one" => DayOne.run()
+       | "day-15" => Console.log(Day15.run())
        | _ => Console.log("Not there yet")
        }
      })

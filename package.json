@@ -21,7 +21,8 @@
       "imports": [
         "Containers = require('@opam/containers')",
         "Fp = require('@reason-native/fp')",
-        "Fs = require('@reason-native/fs/lib')"
+        "Fs = require('@reason-native/fs/lib')",
+        "Angstrom = require('@opam/angstrom')"
       ]
     },
     "src/bin": {
