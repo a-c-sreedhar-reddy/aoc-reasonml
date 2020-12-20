@@ -114,19 +114,75 @@ and evaluateFirstBracket = tokens => {
   let (tokensInBracket, tokens) = getTokensInFirstBracket(tokens);
   (evaluate(tokensInBracket), tokens);
 };
+let rec evaluate2 = tokens => {
+  //   tokens
+  //   |> List.map(token =>
+  //        switch (token) {
+  //        | Add => "+"
+  //        | Multiply => "*"
+  //        | Bra => "("
+  //        | Ket => ")"
+  //        | Number(int) => int |> string_of_int
+  //        }
+  //      )
+  //   |> print_endline;
+  switch (tokens) {
+  //   |> List.fold_left((acc, cur) => acc ++ cur, "")
+
+  | [] => 0
+  | [Number(_), Add] => failwith("no tokens1")
+  | [Number(_), Add, Add, ..._] => failwith("no tokens2")
+  | [Number(_), Add, Multiply, ..._] => failwith("no tokens3")
+  | [Number(_), Multiply, Multiply, ..._] => failwith("no tokens4")
+  | [Number(_), Multiply, Add, ..._] => failwith("no tokens5")
+  | [Number(_), Add, Ket, ..._] => failwith("no tokens6")
+  | [Number(_), Multiply, Ket, ..._] => failwith("no tokens7")
+  | [Add, ..._] => failwith("no tokens8")
+  | [Multiply, ..._] => failwith("no tokens9")
+  | [Number(_), Multiply] => failwith("no tokens 10")
+  | [Number(_), Bra | Ket | Number(_), ..._] => failwith("no tokens 11")
+  | [Bra, ...rest] =>
+    let (a, rest) = evaluateFirstBracket([Bra, ...rest]);
+    evaluate2([Number(a), ...rest]);
+  | [Ket, ..._] => failwith("no tokens 12")
+  | [Number(int)] => int
+  | [Number(int), Add, Number(int2), ...rest] =>
+    evaluate2([Number(int + int2), ...rest])
+  | [Number(int), Multiply, Number(int2), ...rest] =>
+    int * evaluate2([Number(int2), ...rest])
+  | [Number(int), Add, Bra, ...rest] =>
+    let (bracketNumber, rest) = evaluateFirstBracket([Bra, ...rest]);
+    evaluate2([Number(bracketNumber + int), ...rest]);
+  | [Number(int), Multiply, Bra, ...rest] =>
+    let (bracketNumber, rest) = evaluateFirstBracket([Bra, ...rest]);
+    int * evaluate2([Number(bracketNumber), ...rest]);
+  };
+}
+and evaluateFirstBracket = tokens => {
+  let (tokensInBracket, tokens) = getTokensInFirstBracket(tokens);
+  (evaluate2(tokensInBracket), tokens);
+};
 let run = () => {
-  Util.Fs.readLines("/home/a-c-sreedhar-reddy/aoc/src/lib/Day18.txt")
-  |> List.map(str =>
-       parse_string(~consume=All, parseTokens, str)
-       |> (
-         res => {
-           switch (res) {
-           | Ok(a) => a
-           | Error(er) => failwith(er)
-           };
-         }
-       )
-     )
-  |> List.map(evaluate)
-  |> List.fold_left((acc, cur) => acc + cur, 0);
+  let tokens =
+    Util.Fs.readLines("/home/a-c-sreedhar-reddy/aoc/src/lib/Day18.txt")
+    |> List.map(str =>
+         parse_string(~consume=All, parseTokens, str)
+         |> (
+           res => {
+             switch (res) {
+             | Ok(a) => a
+             | Error(er) => failwith(er)
+             };
+           }
+         )
+       );
+  let part1 =
+    tokens
+    |> List.map(evaluate)
+    |> List.fold_left((acc, cur) => acc + cur, 0);
+  let part2 =
+    tokens
+    |> List.map(evaluate2)
+    |> List.fold_left((acc, cur) => acc + cur, 0);
+  "Part 1 : " ++ string_of_int(part1) ++ " Part 2 : " ++ string_of_int(part2);
 };
